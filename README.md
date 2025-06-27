@@ -1,27 +1,47 @@
-#  Setup and Use a Firewall on Windows/Linux
-##  What You Will Learn
-- How to set up and manage the UFW (Uncomplicated Firewall) on Linux.
-- Basic firewall rules for allowing or blocking specific ports or applications.
-- Viewing and maintaining firewall status.
 
-##  Linux Firewall (UFW)
-###  Install UFW
-###  Enable UFW
-###  Allow SSH (Port 22)
-###  Deny Telnet (Port 23)
+# Basic Firewall Configuration on Linux and Windows
 
-## Best Practices
+This repository documents the setup and testing of basic firewall rules on *Kali Linux* using UFW and Windows using PowerShell. It includes rule configuration, screenshots, and configuration summaries.
 
- Always allow SSH (port 22) before enabling UFW on a remote server to prevent getting locked out.
- Use ufw status numbered to manage specific rules on Linux.
- Be careful when modifying rules related to HTTP (80) , HTTPS (443), or DNS (53).
+## Objectives
 
-##  Files
+- Enable and configure UFW on Kali Linux.
+- Add allow/deny rules for common ports.
+- Use PowerShell to manage Windows Firewall rules.
+- Validate rules via command-line output and screenshots.
+- Provide documentation and configuration references.
 
- main.txt: Includes raw command-line instructions for both platforms.
- README.md: This file with full documentation and explanation.
+## Kali Linux (UFW)
 
-## Author
+### UFW Commands
 
-Created  by a cybersecurity learner for learning and awareness purposes.
+bash
+sudo apt update
+sudo apt install ufw -y
+sudo ufw enable
+sudo ufw allow ssh
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw status verbose
+
+Screenshot
+
+See Elabs-Task4.txt
+
+Summary (main.txt)
+Linux UFW:
+- Allowed: SSH, HTTP, HTTPS
+- Default: Incoming Denied, Outgoing Allowed
+
+How to Use
+1. Clone this repository.
+2. Run the provided commands on your test systems.
+3. Review screenshots and logs.
+4. Modify or extend rules as needed.
+
+Notes
+Always test firewall rules in a safe, isolated environment.
+Make sure you do not block SSH access if working remotely on Linux.
 
