@@ -1,47 +1,88 @@
+ README.md
 
-# Basic Firewall Configuration on Linux and Windows
+#  Firewall Setup on Linux & Windows
 
-This repository documents the setup and testing of basic firewall rules on *Kali Linux* using UFW and Windows using PowerShell. It includes rule configuration, screenshots, and configuration summaries.
+##  Objective
 
-## Objectives
+Configure and test basic firewall rules to allow or block traffic using UFW (Linux) and Windows Firewall.
 
-- Enable and configure UFW on Kali Linux.
-- Add allow/deny rules for common ports.
-- Use PowerShell to manage Windows Firewall rules.
-- Validate rules via command-line output and screenshots.
-- Provide documentation and configuration references.
 
-## Kali Linux (UFW)
+## Tools Used
 
-### UFW Commands
+- *Linux (Kali)*: UFW (Uncomplicated Firewall)
+- *Windows 10/11*: PowerShell & GUI (Windows Defender Firewall)
 
+##  Steps Performed
+
+### 1️ Enable the Firewall
+
+#### Linux:
 bash
-sudo apt update
-sudo apt install ufw -y
 sudo ufw enable
-sudo ufw allow ssh
-sudo ufw allow 80/tcp
-sudo ufw allow 443/tcp
-sudo ufw default deny incoming
-sudo ufw default allow outgoing
+
+Windows:
+Open wf.msc or use New-NetFirewallRule in PowerShell.
+
+List Existing Rules
+
+Linux:
+
 sudo ufw status verbose
 
-Screenshot
+Windows:
 
-See Elabs-Task4.txt
+Get-NetFirewallRule
 
-Summary (main.txt)
-Linux UFW:
-- Allowed: SSH, HTTP, HTTPS
-- Default: Incoming Denied, Outgoing Allowed
 
-How to Use
-1. Clone this repository.
-2. Run the provided commands on your test systems.
-3. Review screenshots and logs.
-4. Modify or extend rules as needed.
+Block Port 23 (Telnet)
 
-Notes
-Always test firewall rules in a safe, isolated environment.
-Make sure you do not block SSH access if working remotely on Linux.
+Linux:
 
+sudo ufw deny 23/tcp
+
+Windows:
+
+New-NetFirewallRule -DisplayName "Block Telnet" -Direction Inbound -Protocol TCP -LocalPort 23 -Action Block
+
+
+Test the Rule
+
+Use telnet localhost 23 or Test-NetConnection
+
+Expected result: Connection refused or timeout
+
+
+Allow SSH (Linux)
+
+sudo ufw allow ssh
+
+
+Remove Test Rule
+
+Linux:
+
+sudo ufw delete deny 23/tcp
+
+Windows:
+
+Remove-NetFirewallRule -DisplayName "Block Telnet"
+
+How Firewalls Filter Traffic
+
+Firewalls use rules based on:
+
+Protocol (TCP/UDP)
+
+Port (e.g., 22, 23, 80)
+
+Direction (Inbound/Outbound)
+
+They allow or deny traffic to protect systems from unauthorized access.
+
+Deliverables
+
+main: Command history
+
+README.md: Documentation
+
+screenshots/: Folder containing ufw_status.png, windows_rule.png
